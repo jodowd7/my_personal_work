@@ -1,0 +1,13 @@
+# generator
+def combine_data():
+    offsetvalue = 0
+    file1=api.get_data('metrics',offset=offsetvalue,count = 2)
+    file2=api.get_data('position',offset=offsetvalue,count = 2)
+    while len(file1) > 0 and len(file2) > 0:
+        for i in zip(file1,file2):
+            yield(i[0]+i[1])         
+        offsetvalue+=2
+        file1=api.get_data('metrics',offset=offsetvalue,count = 2)
+        file2=api.get_data('position',offset=offsetvalue,count = 2)
+gen=combine_data()
+next(gen)
